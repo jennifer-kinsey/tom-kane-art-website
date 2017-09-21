@@ -4,7 +4,10 @@
 
 This a freelance website for an artist to display and sell his gallery of paintings for potentials buyers. The artist can upload additional files for listing new paintings and updating existing paintings through an administrative authentication. Features Stripe, Devise, AWS, Paperclip, and ActionMailer.
 
+This site is available online here: https://www.tomkaneart.com/
+
 ### Statement of Work
+Our SOW composed for our client:
 https://docs.google.com/document/d/1LYGByq_7UnubV5P1nPozUEuvJ8nnUu866HmxlpSJT9s/edit?ts=5948677c
 
 ### Prerequisites
@@ -96,10 +99,11 @@ $ bundle exec rspec
 * Jquery 3
 * HTML5
 * SASS
-
-### Authentication
-
-This application uses the Devise Gem for User Authentication.
+* Paperclip
+* Mailgun
+* Stripe API 
+* Devise for authentication
+* AWS for hosting
 
 ## License
 
