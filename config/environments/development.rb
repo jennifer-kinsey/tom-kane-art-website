@@ -1,6 +1,17 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  config.paperclip_defaults = {
+    storage: :s3,
+    s3_region: ENV["AWS_S3_REGION"],
+    s3_credentials: {
+      # s3_host_name: ENV["AWS_S3_HOST_NAME"],
+      bucket: ENV["AWS_S3_BUCKET"],
+      access_key_id: ENV["AWS_ACCESS_KEY_ID"],
+      secret_access_key: ENV["AWS_SECRET_ACCESS_KEY"]
+    }
+  }
+
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
@@ -37,6 +48,9 @@ Rails.application.configure do
   # Raise an error on page load if there are pending migrations.
   config.active_record.migration_error = :page_load
 
+  config.assets.unknown_asset_fallback = true
+
+
   # Debug mode disables concatenation and preprocessing of assets.
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
@@ -51,4 +65,12 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+
+  #Enabled for Devise
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+  config.action_mailer.delivery_method = :mailgun
+  config.action_mailer.mailgun_settings = {
+    api_key: ENV.fetch('MAILGUN_API_KEY'),
+    domain: ENV.fetch('MAILGUN_DOMAIN'),
+  }
 end

@@ -1,8 +1,13 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  config.force_ssl = true
+
   # Code is not reloaded between requests.
   config.cache_classes = true
+  config.serve_static_assets = true
+
+  config.assets.unknown_asset_fallback = true
 
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers
@@ -88,4 +93,13 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  #Enabled for Devise
+  config.action_mailer.default_url_options = { host: 'https://www.tomkaneart.com' }
+
+  config.action_mailer.delivery_method = :mailgun
+  config.action_mailer.mailgun_settings = {
+    api_key: ENV.fetch('MAILGUN_API_KEY'),
+    domain: ENV.fetch('MAILGUN_DOMAIN'),
+  }
 end

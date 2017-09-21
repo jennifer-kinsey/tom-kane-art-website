@@ -1,19 +1,29 @@
 Rails.application.routes.draw do
 
+  devise_for :admins, skip: :registrations
 
+  root 'home#index', as: 'home'
 
-  resources :paintings, :about, :privacy_policy
+  resources :admins
+  resources :paintings
+  resources :privacy_policy, :about, only: [:index]
+  resources :details, only: [:show]
+  resources :order_items
+  resources :charges, only: [:new, :create]
 
+  resource :cart, only: [:show]
 
-  get 'details/index'
-
-
+  # consider resource when reworking
+  # resources :contact, only: [:show, :index]
   get 'contact', to: 'messages#new', as: 'new_message'
   post 'contact', to: 'messages#create', as: 'create_message'
 
-  get 'home/index'
+  get 'thanks', to: 'charges#thanks', as: 'thanks'
 
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  get 'charges/review', to: 'charges#review', as: 'review_order'
+  post 'charges/review', to: 'charges#submit', as: 'submit_order'
 
-  root 'home#index', as: 'home'
+  if Rails.env.production?
+    get '404', to: 'home#unknown'
+  end
 end

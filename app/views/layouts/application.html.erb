@@ -1,14 +1,28 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>TomKaneArt</title>
+    <title>Tom Kane Art</title>
     <%= csrf_meta_tags %>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload'%>
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+
+    <script type="text/javascript">
+      Stripe.setPublishableKey('<%= Rails.configuration.stripe.fetch(:publishable_key) %>');
+    </script>
+
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+    <%= render 'application/favicon' %>
+
+    <meta property="og:url" content="https://www.tomkaneart.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Tom Kane Art" />
+    <meta property="og:description" content="Portland artist, Tom Kane, shares his paintings available for purchase.  " />
+    <meta property="og:image"              content="https://tomkaneart.s3.amazonaws.com/paintings/40972bc2-a2fd-4148-b3b1-71e0934ff789/pclip_image/gallery_35040805120_7b76213178_o.jpg?1502495698" />
   </head>
 
   <body>
+
     <div id="body">
 
       <%= render 'shared/navigation' %>
@@ -16,11 +30,32 @@
 
       <% if request.env['PATH_INFO'] == '/' %>
         <div id="yield">
+          <% if current_admin %>
+            <p>
+              User: <%= current_admin.email %> | <%= link_to "Sign out", destroy_admin_session_path, method: 'delete' %> | <%= link_to "Paintings", paintings_path %> | <%= link_to "Admins", admins_path if current_admin.super_admin %>
+            </p>
+          <% end %>
           <%= yield %>
         </div>
+
       <% else %>
+
         <div class="yield-container">
           <div id="yield">
+
+            <%= flash[:alert] %>
+            <%= flash[:notice] %>
+            <%= flash[:error] %>
+
+            <% if current_admin %>
+              <p>
+                User: <%= current_admin.email %> | <%= link_to "Sign out", destroy_admin_session_path, method: 'delete' %> | <%= link_to "Paintings", paintings_path %> | <%= link_to("Admins", admins_path) if current_admin.super_admin %>
+              </p>
+            <% elsif request.env['PATH_INFO'] == "/admins/sign_in" %>
+              <%= link_to "Sign in", new_admin_session_path %> | <%= link_to "Paintings", paintings_path %>
+            <% end %>
+
+
             <%= yield %>
           </div>
         </div>

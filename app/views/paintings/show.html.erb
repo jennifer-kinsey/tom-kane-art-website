@@ -1,14 +1,29 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
+  <p id="notice"><%= notice %></p>
 
-<h2>Title: <%= @painting.title %></h2>
-<p>Year: <%= @painting.year %></p>
-<p>Medium: <%= @painting.medium %></p>
-<p>Support: <%= @painting.support %></p>
-<p>Framed: <%= @painting.framed %></p>
-<p>Dimensions: <%= @painting.dimensions %></p>
-<p>Year: <%= @painting.year %></p>
-<p>Price: <%= @painting.price %></p>
+  <h2>Title: <%= @painting.title %></h2>
+  <p>Description: <%= @painting.description %></p>
+  <p>Year: <%= @painting.year %></p>
+  <p>Medium: <%= @painting.medium %></p>
+  <p>Support: <%= @painting.support %></p>
+  <p>Framed: <%= @painting.framed %></p>
+  <p>Dimensions: <%= @painting.dimensions %></p>
+  <p>Year: <%= @painting.year %></p>
+  <p>Price:
+    <% if @painting.price == 0 %>
+      Not for Sale
+    <% elsif @painting.price == 1000000 %>
+      Sold
+    <% else %>
+      <%= number_to_currency(@painting.price) %>
+    <% end %>
+  </p>
+  <p>Style: <%= @painting.style %></p>
+  <p>Slug: <%= @painting.slug %></p>
+  <p>Status: <%= @painting.status %></p>
+  <p>Image: <%= image_tag @painting.pclip_image.url(:gallery) %></p>
 
-<%= link_to 'Edit', edit_painting_path(@painting) %> | 
-<%= link_to 'Delete', @painting, method: :delete, data: { confirm: 'Are you sure?' } %> | 
-<%= link_to 'Back', paintings_path %>
+  <%= link_to 'Edit', edit_painting_path(@painting) %> |
+  <%= link_to 'Delete', @painting, method: :delete, data: { confirm: 'Are you sure?' } %> |
+  <%= link_to 'Back', paintings_path %>
+</div>

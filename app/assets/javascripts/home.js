@@ -1,16 +1,18 @@
 (function($) {
   $(document).ready(function(){
     $('#arrow').hide()
+
     $('#toggle').click(function() {
       $(this).toggleClass('active');
       $('#overlay-navbar').toggleClass('open');
+
     });
 
-    let currentPath = window.location.pathname;
+    var currentPath = window.location.pathname;
 
-    let detailPageLoad = function() {
-      let img = $("img")[0];
-      let imgSource = $("img")[0].currentSrc;
+    var detailPageLoad = function() {
+      var img = $("img")[0];
+      var imgSource = $("img")[0].currentSrc;
       $('<img/>').attr('src', imgSource).on('load', function() {
         $(this).remove();
         $('.detail-image').hide().fadeIn(3000);
@@ -18,10 +20,10 @@
       });
     }
 
-    let galleryPageLoad = function() {
-      $('<img/>').attr('src', 'https://c1.staticflickr.com/5/4245/35040805720_3ff5b9f37e_o.png').on('load', function() {
+    var galleryPageLoad = function() {
+      $('<img/>').attr('src', 'https://tomkaneart.s3.amazonaws.com/paintings/440367a1-8774-41a9-a131-4146d7e8e5cf/pclip_image/masthead_35040805720_3ff5b9f37e_o.jpg').on('load', function() {
         $(this).remove();
-        $('.jumbotron').css('background-image', 'url(https://c1.staticflickr.com/5/4245/35040805720_3ff5b9f37e_o.png)').hide().fadeIn(3000);
+        $('.jumbotron').css('background-image', 'url(https://tomkaneart.s3.amazonaws.com/paintings/440367a1-8774-41a9-a131-4146d7e8e5cf/pclip_image/masthead_35040805720_3ff5b9f37e_o.jpg)').hide().fadeIn(3000);
         $('#overlay').fadeIn(5000);
         $('#arrow').hide().fadeIn(5000);
       });
